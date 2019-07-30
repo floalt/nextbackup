@@ -11,8 +11,3 @@ This script is for backup my Nextcloud-Server with rdiff-backup on a local iscsi
 ### usage
 In the first part of the script you have to set the variables
 Then add it to cronjob and be happy
-
-### feature request
-- make a config file for the variables to edit
-- send mail only when there is a problem
-- include backup for config-files in `/etc`
