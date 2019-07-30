@@ -1,8 +1,17 @@
 #!/bin/bash
 
-### Backup der Nextcloud-Datenbank und des Dateien
+### Backup der Nextcloud-Datenbank, Konfigurations-Dateien und der User-Daten
 
-## Variablen definieren ##
+# description
+#   Dieses Script sichert alle Daten per rdiff-backup auf ein lokales Laufwerk, z.B. über iSCSI
+#    1. Dump der Datenbank
+#    2. Sicherung der Konfigurations-Dateien
+#    3. Sicherung der User-Daten
+# author: flo.alt@fa-netz.de
+# version: 0.9
+
+
+### Variablen definieren ###
 
 # Basics
 SCRIPTPATH="/usr/local/scripts/nextbackup/"	# Hier liegt dieses Script
