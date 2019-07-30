@@ -7,6 +7,7 @@
 #    1. Dump der Datenbank
 #    2. Sicherung der Konfigurations-Dateien
 #    3. Sicherung der User-Daten
+#   Es werden Protokolldateien abgelegt, aber nur im Fehlerfall per Mail verschickt
 # author: flo.alt@fa-netz.de
 # version: 0.9
 
@@ -30,16 +31,22 @@ LOGDIR=/var/log/nextbackup		# Log-Verzeichnis
 STARTBAK="$(date +%d.%m.%Y-%H:%M)"	# Zeitstempel
 SENDTO="admin@somewhere.org"		# Mail-Empfänger für die Log-Datei
 CUSTOMER="ACME"		# Kunden-Name
-
 LOGFILE="$LOGDIR"/nextbackup-"$STARTBAK".log
+ERRFILE="$LOGDIR"/error-"$STARTBAK".log
+
+# Voraussetzungen schaffen
+
+if [ ! -d $LOGDIR ]; then mkdir -p $LOGDIR; fi
+
+
+### Update durchführen ###
 
 touch "$SCRIPTPATH"/lastbackup-start
 
 (
-
-echo "Backup gestartet $(date +%d.%m.%Y-%H:%M)"
-echo ""
-
+echo "Protokolldatei vom täglichen Nextcloud-Backup";echo "ausgeführt von $SCRIPTPATH/nextbackup.sh";echo ""
+echo "Backup gestartet $(date +%d.%m.%Y-%H:%M)";echo ""
+) | tee $LOGFILE
 
 
 ## Vorraussetzungen für Backup prüfen ##
@@ -48,20 +55,17 @@ echo ""
 
 touch "$BAKPATH"/writetest
 
-if [ $? = 0 ]
-	then
-		echo "OK: Schreibtest auf Backup-Verzeichnis erfolgreich"
-		rm "$BACKPATH"/writetest
-	else
-		echo "FEHLER: kann nicht auf Backup-Verzeichnis schreiben"
-		echo "ABBRUCH: Backup fehlgeschlagen"
-		exit 1
+if [ $? = 0 ];then
+    echo "OK: Schreibtest auf Backup-Verzeichnis erfolgreich" >> $LOGFILE
+    rm "$BACKPATH"/writetest
+  else
+    echo "FEHLER: kann nicht auf Backup-Verzeichnis schreiben" >> $ERRFILE
+    echo "ABBRUCH: Backup fehlgeschlagen" >> $ERRFILE
+    ERRORMARKER=yes
 fi
 
-
-
+---------------------------------------------------------------------
 ## Datenbank-Dump erstellen ##
-
 
 # Maintenance-Mode aktivieren
 sudo -u www-data php /var/www/nextcloud/occ maintenance:mode --on
