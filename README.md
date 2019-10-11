@@ -20,7 +20,7 @@ This script is for backup my Nextcloud-Server with rdiff-backup on a local iscsi
 2. make executeable: `sudo chmod 750 nextbackup.sh`
 3. set crontab `sudo crontab -e` (e.g. daily 2:00)
 4. create these folders:
-  - $BACKPATH/nextcloud-data/
-  - $BACKPATH/nextcloud-config/
-  - $BACKPATH/database/
-  - /var/log/nextbackup
+    - $BACKPATH/nextcloud-data/
+    - $BACKPATH/nextcloud-config/
+    - $BACKPATH/database/
+    - /var/log/nextbackup
