@@ -9,5 +9,5 @@ This script is for backup my Nextcloud-Server with rdiff-backup on a local iscsi
 4. Sends a mail with the logfile
 
 ### usage
-In the first part of the script you have to set the variables
-Then add it to cronjob and be happy
+- In the first part of the script you have to set the variables
+- Then add it to cronjob and be happy
