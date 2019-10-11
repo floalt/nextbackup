@@ -1,4 +1,4 @@
-# nextbackup
+# nextbackup: Nextcloud Backup
 A shell backup script for nextcloud
 
 ### Description
