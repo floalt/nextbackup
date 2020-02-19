@@ -9,14 +9,14 @@
 #    3. Sicherung der User-Daten
 #   Es werden Protokolldateien abgelegt, aber nur im Fehlerfall per Mail verschickt
 # author: flo.alt@fa-netz.de
-# version: 0.9
+# version: 0.91
 
 
 ### Variablen definieren ###
 
 # Basics
-SCRIPTPATH="/usr/local/scripts/nextbackup/"	# Hier liegt dieses Script
-BAKPATH="/mnt/iscsi-backup/daily-backup/"	# Backup-Stamm-Verzeichnis (Backup to)
+SCRIPTPATH="/usr/local/scripts/nextbackup"	# Hier liegt dieses Script
+BAKPATH="/mnt/iscsi-backup/daily-backup"	# Backup-Stamm-Verzeichnis (Backup to)
 DATAPATH="/mnt/daten/nextcloud"			# Datenpfad Nextcloud (Backup from)
 
 # Datenbank-Backup
@@ -38,15 +38,14 @@ ERRFILE="$LOGDIR"/error-"$STARTBAK".log
 
 if [ ! -d $LOGDIR ]; then mkdir -p $LOGDIR; fi
 
-
-### Update durchführen ###
+#---------------------------------------------------------------------
+### Backup durchführen ###
 
 touch "$SCRIPTPATH"/lastbackup-start
 
 (
 echo "Protokolldatei vom täglichen Nextcloud-Backup";echo "ausgeführt von $SCRIPTPATH/nextbackup.sh";echo ""
 echo "Backup gestartet $(date +%d.%m.%Y-%H:%M)";echo ""
-) | tee $LOGFILE
 
 
 ## Vorraussetzungen für Backup prüfen ##
@@ -57,14 +56,14 @@ touch "$BAKPATH"/writetest
 
 if [ $? = 0 ];then
     echo "OK: Schreibtest auf Backup-Verzeichnis erfolgreich" >> $LOGFILE
-    rm "$BACKPATH"/writetest
+    rm "$BAKPATH"/writetest
   else
     echo "FEHLER: kann nicht auf Backup-Verzeichnis schreiben" >> $ERRFILE
     echo "ABBRUCH: Backup fehlgeschlagen" >> $ERRFILE
     ERRORMARKER=yes
 fi
 
----------------------------------------------------------------------
+#---------------------------------------------------------------------
 ## Datenbank-Dump erstellen ##
 
 # Maintenance-Mode aktivieren
