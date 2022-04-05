@@ -9,7 +9,7 @@
 #    3. Sicherung der User-Daten
 #   Es werden Protokolldateien abgelegt, aber nur im Fehlerfall per Mail verschickt
 # author: flo.alt@fa-netz.de
-# version: 0.91
+# version: 0.92
 
 
 ### Variablen definieren ###
@@ -18,6 +18,7 @@
 SCRIPTPATH="/usr/local/scripts/nextbackup"	# Hier liegt dieses Script
 BAKPATH="/mnt/iscsi-backup/daily-backup"	# Backup-Stamm-Verzeichnis (Backup to)
 DATAPATH="/mnt/daten/nextcloud"			# Datenpfad Nextcloud (Backup from)
+RETENTION="2Y"							# Dauer der Speicherung (D[ay] W[eek] M[onth] Y[ear])
 
 # Datenbank-Backup
 DBUSER="<username>"			# Datenbank-User
@@ -118,7 +119,18 @@ if [ $? = 0 ]
 		exit 1
 fi
 
+## Retention Time
 
+echo ""
+echo "Backups älter als $RETENTION werden gelöscht..."
+rdiff-backup --remove-older-than $RETENTION --force $SCRIPTPATH
+
+if [ $? = 0 ]
+	then
+		echo "OK: Alte Backups erfolgreich abgeschlossen"
+	else
+		echo "FEHLER: Fehler beim löschen alter Backups"
+fi
 
 ## Abschluss des Backups ##
 
