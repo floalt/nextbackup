@@ -1,0 +1,47 @@
+# configfile for nextbackup
+
+# Basics
+    
+    # Backup-Stamm-Verzeichnis (Backup to)
+    BAKPATH="/mnt/iscsi-backup/daily-backup"
+
+    # Datenpfad Nextcloud (Backup from)
+    DATAPATH="/mnt/daten/nextcloud"
+
+	# Dauer der Speicherung
+        # D[ay]
+        # W[eek]
+        # M[onth]
+        # Y[ear])
+    RETENTION="2Y"
+
+
+# Datenbank-Backup
+
+    # Datenbank-User
+    DBUSER="<username>"
+	
+    # Passwort für Datenbank-User
+    DBPWD="<password>"
+
+    # Name der Nextcloud-Datenbank, z.B. nextcloud
+    DBNAME="nextcloud"
+
+    # Ort für das Datanbank-Backup
+    DBBAKPATH="$BAKPATH"/database
+
+    # Datei für das Datenbank-Backup
+    DBBAKFILE="nextcloud-sqlbackup.bak"
+
+
+
+# Prokokoll
+    
+    # Log-Verzeichnis
+    LOGDIR=/var/log/nextbackup
+
+    # Mail-Empfänger für die Log-Datei
+    SENDTO="admin@somewhere.org"
+
+    # Kunden-Name
+    CUSTOMER="ACME"
