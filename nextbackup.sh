@@ -117,7 +117,9 @@
 
 	echo ""
 	echo "Backups älter als $RETENTION werden gelöscht..."
-	rdiff-backup --remove-older-than $RETENTION --force $SCRIPTPATH
+	rdiff-backup --remove-older-than $RETENTION --force "$DBBAKPATH"
+	rdiff-backup --remove-older-than $RETENTION --force "$BAKPATH"/nextcloud-config
+	rdiff-backup --remove-older-than $RETENTION --force "$BAKPATH"/nextcloud-data
 
 	if [ $? = 0 ]
 		then
