@@ -1,0 +1,43 @@
+# configfile for nextdump
+
+# configure your dump
+
+    # dump to this folder:
+    dump_to="/mnt/data/nextdump"
+
+    # filename for dumpfile
+    db_dumpfile="nextcloud-sqlbackup.sql"
+
+    # database-user
+    db_user="nextclouduser"
+	
+    # database-password
+    db_pwd="my-o-so-cool-password"
+
+    # database-name, i.e. nextcloud
+    db_name="nextcloud"
+
+
+# setup log & monitoring
+
+    # store logfiles in this way
+    logdir="/var/log/nextbackup"
+    logname="nextdump"
+
+    # retention: keep n logfiles
+    keep=10
+
+    # send logfile to this email
+    sendto="customer@somewhere.com"
+
+    # name of customer / site
+    site="Customer"
+
+    # name of this server
+    # you can let read the hostname
+    # or specify by yourself
+    server=$(cat /etc/hostname)
+    #server="set.servername.byyourself"
+
+    # headline of logfile
+    headline="Protokolldatei vom Nexcloud DB-Dump"

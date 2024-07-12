@@ -1,0 +1,31 @@
+# functions
+
+# failcheck: exit if fails
+failcheck () {
+    if [[ $? = 0 ]] && [[ $failcount = 0 ]]; then
+        echo -e "$yeah" | tee -a $logfile
+    else
+        echo -e "$shit \nENDE" | tee -a $logfile $errorlog
+        exitwitherror             
+    fi
+}
+
+# exit with errors or failure
+exitwitherror () {
+    # unset maintenance mode
+        sudo -u www-data php /var/www/nextcloud/occ maintenance:mode --off
+    # logfile entry
+        echo -e "\nDump ist fehlgeschlagen und wurde abgebrochen\n\n" | tee -a $logfile $errorlog
+    # set markerfile
+        cp $logfile "$logdir"/last-error.log
+    # send email
+        (cat $errorlog; uuencode $logfile logfile.txt) | mail -s "Dump fehlgeschlagen: $server bei $site" $sendto
+###        exit 1
+
+}
+
+# delete old logfiles
+logretention () {
+    logpattern="*.log"
+    ls -t $logdir/$logpattern | tail -n +$((keep + 1)) | xargs rm --
+}
