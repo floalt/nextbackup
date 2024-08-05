@@ -9,7 +9,7 @@
 #    3. Sicherung der User-Daten
 
 # author: flo.alt@fa-netz.de
-# version: 0.93
+# version: 0.94
 
 
 ## first steps
@@ -19,7 +19,7 @@
 	SCRIPTPATH=$(dirname "$(readlink -e "$0")")
 	SCRIPTNAME="$(basename $(realpath $0))"
 
-	source $SCRIPTPATH/config
+	source $SCRIPTPATH/nextbackup.config
 
 	# prepare for start
 
